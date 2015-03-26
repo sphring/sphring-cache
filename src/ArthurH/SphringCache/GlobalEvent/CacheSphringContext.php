@@ -30,8 +30,8 @@ class CacheSphringContext extends SphringGlobal
      */
     public function run()
     {
+        echo 'lksmlkfmdlkfmlklm';
         $origFile = new File($this->getSphring()->getYamlarh()->getFilename());
-
         $this->cacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
             sprintf(CacheSphringContext::CACHE_FILE, $origFile->getHash('md5')));
         if (!$this->cacheFile->isFile()) {

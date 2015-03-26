@@ -49,7 +49,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Arthurh\\SphringCache\\": "src/ArthurH/SphringCache/"
+      "ArthurH\\SphringCache\\": "src/ArthurH/SphringCache/"
     }
   }
 }

@@ -16,6 +16,7 @@ namespace ArthurH\SphringCache\CacheAnnotation;
 use Arhframe\Util\File;
 use Arthurh\Sphring\Model\Annotation\AopAnnotation\AbstractAopAnnotation;
 use ArthurH\SphringCache\Bean\CacheBean;
+use ArthurH\SphringCache\CacheBeanSingleton;
 use ArthurH\SphringCache\CacheManager\AbstractCacheManager;
 use ArthurH\SphringCache\Exception\SphringCacheException;
 use ArthurH\SphringCache\GlobalEvent\CacheSphringContext;
@@ -36,12 +37,12 @@ abstract class AbstractSphringCacheAnnotation extends AbstractAopAnnotation
      */
     public function run()
     {
-        $cacheBean = $this->getBean();
+        $cacheBean = CacheBeanSingleton::getInstance()->getCacheBean();
         if (!($cacheBean instanceof CacheBean)) {
             throw new SphringCacheException("Error for bean '%s' cache must be a instance of %s for annotation '%'.",
                 $this->bean->getId(), CacheBean::class, $this::getAnnotationName());
         }
-        $this->cacheBean = $this->getBean();
+        $this->cacheBean = $cacheBean;
         $this->cacheManager = $cacheBean->getObject();
         $this->cacheSphringContext();
     }
@@ -60,7 +61,7 @@ abstract class AbstractSphringCacheAnnotation extends AbstractAopAnnotation
             return;
         }
         $origFile = new File($sphring->getYamlarh()->getFilename());
-        if ($origFile->getTime() == $cacheFile->getTime()) {
+        if ($cacheFile->isFile() && $origFile->getTime() == $cacheFile->getTime()) {
             return;
         }
         $context = $sphring->getContext();
