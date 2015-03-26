@@ -29,7 +29,12 @@
             "class": "ArthurH\\SphringCache\\Bean\\CacheBean"
           }
         ],
-        "sphringGlobal": [],
+        "sphringGlobal": [
+          {
+            "eventName": "SPHRING_START_LOAD_CONTEXT",
+            "class": "ArthurH\\SphringCache\\GlobalEvent\\CacheSphringContext"
+          }
+        ],
         "annotationMethodCallAfter": [],
         "annotationMethodCallBefore": [
           {
