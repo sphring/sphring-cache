@@ -30,8 +30,7 @@ class CacheSphringContext extends SphringGlobal
      */
     public function run()
     {
-        $contextRoot = $this->getSphring()->getContextRoot();
-        $this->cacheFile = new File($contextRoot . DIRECTORY_SEPARATOR . CacheSphringContext::CACHE_FILE);
+        $this->cacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR . CacheSphringContext::CACHE_FILE);
         if (!$this->cacheFile->isFile()) {
             return;
         }
