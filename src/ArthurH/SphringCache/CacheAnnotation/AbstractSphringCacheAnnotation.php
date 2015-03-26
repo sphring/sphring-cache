@@ -65,7 +65,7 @@ abstract class AbstractSphringCacheAnnotation extends AbstractAopAnnotation
         $time = time();
         touch($origFile, $time);
         $cacheFile->setContent(serialize($context));
-        touch(realpath($cacheFile->absolute()), $time);
+        touch($cacheFile->absolute(), $time);
     }
 
     /**
