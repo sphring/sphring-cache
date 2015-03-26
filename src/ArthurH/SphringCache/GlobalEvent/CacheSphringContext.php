@@ -18,7 +18,7 @@ use Arthurh\Sphring\Model\SphringGlobal;
 
 class CacheSphringContext extends SphringGlobal
 {
-    const CACHE_FILE = '.cache-sphring';
+    const CACHE_FILE = '.cache-sphring-%s';
 
     /**
      * @var File
@@ -30,7 +30,10 @@ class CacheSphringContext extends SphringGlobal
      */
     public function run()
     {
-        $this->cacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR . CacheSphringContext::CACHE_FILE);
+        $origFile = new File($this->getSphring()->getYamlarh()->getFilename());
+
+        $this->cacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
+            sprintf(CacheSphringContext::CACHE_FILE, $origFile->getHash('md5')));
         if (!$this->cacheFile->isFile()) {
             return;
         }

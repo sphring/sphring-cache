@@ -48,8 +48,11 @@ abstract class AbstractSphringCacheAnnotation extends AbstractAopAnnotation
 
     private function cacheSphringContext()
     {
+
         $sphring = $this->bean->getSphringEventDispatcher()->getSphring();
-        $cacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR . CacheSphringContext::CACHE_FILE);
+        $origFile = new File($sphring->getYamlarh()->getFilename());
+        $cacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR
+            . sprintf(CacheSphringContext::CACHE_FILE, $origFile->getHash('md5')));
         if (!$this->cacheBean->isCacheSphring() && $cacheFile->isFile()) {
             $cacheFile->remove();
             return;
