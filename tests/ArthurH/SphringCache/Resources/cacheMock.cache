@@ -1,0 +1,1 @@
+a:3:{s:5:"cache";a:2:{s:4:"type";s:5:"cache";s:5:"class";s:50:"ArthurH\SphringCache\CacheManager\NullCacheManager";}s:7:"foobean";a:1:{s:5:"class";s:33:"ArthurH\SphringCache\FakeBean\Foo";}s:12:"foobeancache";a:1:{s:5:"class";s:33:"ArthurH\SphringCache\FakeBean\Foo";}}

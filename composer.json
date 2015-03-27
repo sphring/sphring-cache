@@ -33,6 +33,10 @@
           {
             "eventName": "SPHRING_START_LOAD_CONTEXT",
             "class": "ArthurH\\SphringCache\\GlobalEvent\\CacheSphringContext"
+          },
+          {
+            "eventName": "SPHRING_FINISHED_LOAD",
+            "class": "ArthurH\\SphringCache\\GlobalEvent\\CacheSphringFinished"
           }
         ],
         "annotationMethodCallAfter": [],

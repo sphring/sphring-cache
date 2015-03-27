@@ -14,10 +14,10 @@ namespace ArthurH\SphringCache\Bean;
 
 
 use Arthurh\Sphring\Model\Bean\AbstractBean;
-use ArthurH\SphringCache\CacheBeanSingleton;
 use ArthurH\SphringCache\CacheManager\AbstractCacheManager;
 use ArthurH\SphringCache\CacheManagerSingleton;
 use ArthurH\SphringCache\Exception\SphringCacheException;
+use ArthurH\SphringCache\SphringCacheRunnerPlugin;
 
 class CacheBean extends AbstractBean
 {
@@ -34,7 +34,8 @@ class CacheBean extends AbstractBean
                 AbstractCacheManager::class, $this->id);
         }
         parent::inject();
-        CacheBeanSingleton::getInstance()->setCacheBean($this);
+        $this->object->setCacheSphring($this->cacheSphring);
+        SphringCacheRunnerPlugin::getInstance()->setCacheManager($this->object);
     }
 
     public function getValidBeanFile()

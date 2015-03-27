@@ -7,15 +7,15 @@
  * or at 'http://opensource.org/licenses/MIT'.
  *
  * Author: Arthur Halet
- * Date: 26/03/2015
+ * Date: 27/03/2015
  */
 
-namespace ArthurH\SphringCache\Exception;
+namespace ArthurH\SphringCache\Enum;
 
 
-use Arthurh\Sphring\Exception\SphringException;
+use MyCLabs\Enum\Enum;
 
-class SphringCacheException extends SphringException
+class SphringCacheEnum extends Enum
 {
-
+    const CACHE_FILE = '.cache-sphring-%s';
 }

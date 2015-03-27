@@ -23,6 +23,11 @@ abstract class AbstractCacheManager
     private $sphring;
 
     /**
+     * @var bool
+     */
+    private $cacheSphring = true;
+
+    /**
      * @return Sphring
      */
     public function getSphring()
@@ -36,6 +41,22 @@ abstract class AbstractCacheManager
     public function setSphring(Sphring $sphring)
     {
         $this->sphring = $sphring;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCacheSphring()
+    {
+        return $this->cacheSphring;
+    }
+
+    /**
+     * @param boolean $cacheSphring
+     */
+    public function setCacheSphring($cacheSphring)
+    {
+        $this->cacheSphring = (boolean)$cacheSphring;
     }
 
 }
