@@ -5,7 +5,7 @@ root:
       _type: text
       _required: true
     cacheSphring:
-      _type: boolean
+      _type: text
       _required: false
     constructor:
       _type: prototype
