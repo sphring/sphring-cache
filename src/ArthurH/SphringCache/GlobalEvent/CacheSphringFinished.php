@@ -48,9 +48,9 @@ class CacheSphringFinished extends SphringGlobal
             . sprintf(SphringCacheEnum::CACHE_FILE, $origFile->getHash('md5')));
         if (!$this->cacheManager->isCacheSphring() && $cacheFile->isFile()) {
             $cacheFile->remove();
-            $this->removeProxies();
             return;
         } elseif (!$this->cacheManager->isCacheSphring()) {
+            $this->removeProxies();
             return;
         }
         $origFile = new File($this->sphring->getYamlarh()->getFilename());
