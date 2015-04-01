@@ -46,10 +46,10 @@ class CacheSphringFinished extends SphringGlobal
         $cacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
             SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR
             . sprintf(SphringCacheEnum::CACHE_FILE, $origFile->getHash('md5')));
-        if (!$this->cacheManager->isCacheSphring() && $cacheFile->isFile()) {
-            $cacheFile->remove();
-            return;
-        } elseif (!$this->cacheManager->isCacheSphring()) {
+        if (!$this->cacheManager->isCacheSphring()) {
+            if ($cacheFile->isFile()) {
+                $cacheFile->remove();
+            }
             $this->removeProxies();
             return;
         }
