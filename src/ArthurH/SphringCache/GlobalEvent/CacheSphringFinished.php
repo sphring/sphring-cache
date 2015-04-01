@@ -42,7 +42,8 @@ class CacheSphringFinished extends SphringGlobal
     private function cacheSphringContext()
     {
         $origFile = new File($this->sphring->getYamlarh()->getFilename());
-        $cacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR
+        $cacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR
             . sprintf(SphringCacheEnum::CACHE_FILE, $origFile->getHash('md5')));
         if (!$this->cacheManager->isCacheSphring() && $cacheFile->isFile()) {
             $cacheFile->remove();

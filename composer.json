@@ -21,8 +21,6 @@
   "extra": {
     "sphring": {
       "extend": {
-        "beanProperty": [],
-        "annotationClass": [],
         "beanType": [
           {
             "eventName": "cache",
@@ -39,14 +37,12 @@
             "class": "ArthurH\\SphringCache\\GlobalEvent\\CacheSphringFinished"
           }
         ],
-        "annotationMethodCallAfter": [],
         "annotationMethodCallBefore": [
           {
             "eventName": "Cacheable",
             "class": "ArthurH\\SphringCache\\CacheAnnotation\\SphringCacheableAnnotation"
           }
-        ],
-        "annotationClassInstantiate": []
+        ]
       },
       "isPlugin": true
     }

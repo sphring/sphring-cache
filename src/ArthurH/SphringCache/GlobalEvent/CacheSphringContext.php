@@ -14,8 +14,12 @@ namespace ArthurH\SphringCache\GlobalEvent;
 
 
 use Arhframe\Util\File;
+use Arhframe\Util\Folder;
 use Arthurh\Sphring\Model\SphringGlobal;
+use Arthurh\Sphring\ProxyGenerator\ProxyGenerator;
 use ArthurH\SphringCache\Enum\SphringCacheEnum;
+use ProxyManager\Configuration;
+use ProxyManager\Factory\AccessInterceptorValueHolderFactory;
 
 class CacheSphringContext extends SphringGlobal
 {
@@ -30,16 +34,31 @@ class CacheSphringContext extends SphringGlobal
      */
     public function run()
     {
+        $this->cacheProxy();
         $origFile = new File($this->getSphring()->getYamlarh()->getFilename());
         $this->cacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
             sprintf(SphringCacheEnum::CACHE_FILE, $origFile->getHash('md5')));
         if (!$this->cacheFile->isFile()) {
             return;
         }
-        $this->loadFromCache();
+        $this->loadContextFromCache();
     }
 
-    private function loadFromCache()
+    private function cacheProxy()
+    {
+        $proxiesFolder = new Folder(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER_PROXIES);
+        $proxiesFolder->create();
+        $proxyManagerConfiguration = new Configuration();
+        $proxyManagerConfiguration->setProxiesTargetDir($proxiesFolder->absolute());
+        $proxyFactory = new AccessInterceptorValueHolderFactory($proxyManagerConfiguration);
+        ProxyGenerator::getInstance()->setProxyFactory($proxyFactory);
+        spl_autoload_register($proxyManagerConfiguration->getProxyAutoloader());
+    }
+
+    private function loadContextFromCache()
     {
         $origFile = new File($this->getSphring()->getYamlarh()->getFilename());
         if ($origFile->getTime() != $this->cacheFile->getTime()) {
