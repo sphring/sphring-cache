@@ -70,6 +70,7 @@ class CacheSphringFinished extends SphringGlobal
         $proxiesFolder = new Folder(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
             SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
             SphringCacheEnum::CACHE_FOLDER_PROXIES);
+        $proxiesFolder->removeFiles('#.*#i', true);
         $proxiesFolder->remove();
     }
 
