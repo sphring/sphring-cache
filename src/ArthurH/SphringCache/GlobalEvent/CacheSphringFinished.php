@@ -14,6 +14,7 @@ namespace ArthurH\SphringCache\GlobalEvent;
 
 
 use Arhframe\Util\File;
+use Arhframe\Util\Folder;
 use Arthurh\Sphring\Model\SphringGlobal;
 use ArthurH\SphringCache\CacheManager\AbstractCacheManager;
 use ArthurH\SphringCache\Enum\SphringCacheEnum;
@@ -47,6 +48,7 @@ class CacheSphringFinished extends SphringGlobal
             . sprintf(SphringCacheEnum::CACHE_FILE, $origFile->getHash('md5')));
         if (!$this->cacheManager->isCacheSphring() && $cacheFile->isFile()) {
             $cacheFile->remove();
+            $this->removeProxies();
             return;
         } elseif (!$this->cacheManager->isCacheSphring()) {
             return;
@@ -61,6 +63,14 @@ class CacheSphringFinished extends SphringGlobal
         touch($origFile, $time);
         $cacheFile->setContent(serialize($context));
         touch($cacheFile->absolute(), $time);
+    }
+
+    private function removeProxies()
+    {
+        $proxiesFolder = new Folder(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER_PROXIES);
+        $proxiesFolder->remove();
     }
 
     /**
