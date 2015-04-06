@@ -17,7 +17,8 @@ use MyCLabs\Enum\Enum;
 
 class SphringCacheEnum extends Enum
 {
-    const CACHE_FILE = '.cache-sphring-%s';
+    const CACHE_FILE_CONTEXT = '.cache-sphring-%s';
+    const CACHE_FILE_BEAN = '.cache-sphring-bean-%s';
     const CACHE_FOLDER = 'sphring';
     const CACHE_FOLDER_PROXIES = 'proxies';
 }

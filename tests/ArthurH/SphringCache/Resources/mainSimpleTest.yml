@@ -3,3 +3,8 @@ cache:
   class:  ArthurH\SphringCache\CacheManager\NullCacheManager
 foobean:
   class: ArthurH\SphringCache\FakeBean\Foo
+  properties:
+    bar:
+      ref: barbean
+barbean:
+  class: ArthurH\SphringCache\FakeBean\Bar

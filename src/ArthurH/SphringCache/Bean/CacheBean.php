@@ -26,6 +26,18 @@ class CacheBean extends AbstractBean
      * @var bool
      */
     private $cacheSphring = true;
+    /**
+     * @var bool
+     */
+    private $cacheSphringProxies = true;
+    /**
+     * @var bool
+     */
+    private $cacheSphringContext = true;
+    /**
+     * @var bool
+     */
+    private $cacheSphringBean = true;
 
     public function inject()
     {
@@ -35,6 +47,9 @@ class CacheBean extends AbstractBean
         }
         parent::inject();
         $this->object->setCacheSphring($this->cacheSphring);
+        $this->object->setCacheSphringProxies($this->cacheSphringProxies);
+        $this->object->setCacheSphringContext($this->cacheSphringContext);
+        $this->object->setCacheSphringBean($this->cacheSphringBean);
         SphringCacheRunnerPlugin::getInstance()->setCacheManager($this->object);
     }
 
@@ -57,6 +72,54 @@ class CacheBean extends AbstractBean
     public function setCacheSphring($cacheSphring)
     {
         $this->cacheSphring = (bool)$cacheSphring;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCacheSphringProxies()
+    {
+        return $this->cacheSphringProxies;
+    }
+
+    /**
+     * @param boolean $cacheSphringProxies
+     */
+    public function setCacheSphringProxies($cacheSphringProxies)
+    {
+        $this->cacheSphringProxies = $cacheSphringProxies;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCacheSphringContext()
+    {
+        return $this->cacheSphringContext;
+    }
+
+    /**
+     * @param boolean $cacheSphringContext
+     */
+    public function setCacheSphringContext($cacheSphringContext)
+    {
+        $this->cacheSphringContext = $cacheSphringContext;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCacheSphringBean()
+    {
+        return $this->cacheSphringBean;
+    }
+
+    /**
+     * @param boolean $cacheSphringBean
+     */
+    public function setCacheSphringBean($cacheSphringBean)
+    {
+        $this->cacheSphringBean = $cacheSphringBean;
     }
 
 }

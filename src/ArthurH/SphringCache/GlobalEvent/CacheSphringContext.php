@@ -27,7 +27,11 @@ class CacheSphringContext extends SphringGlobal
     /**
      * @var File
      */
-    private $cacheFile;
+    private $cacheFileContext;
+    /**
+     * @var File
+     */
+    private $cacheFileBean;
 
     /**
      * @return mixed
@@ -35,14 +39,8 @@ class CacheSphringContext extends SphringGlobal
     public function run()
     {
         $this->cacheProxy();
-        $origFile = new File($this->getSphring()->getYamlarh()->getFilename());
-        $this->cacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
-            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
-            sprintf(SphringCacheEnum::CACHE_FILE, $origFile->getHash('md5')));
-        if (!$this->cacheFile->isFile()) {
-            return;
-        }
         $this->loadContextFromCache();
+        $this->loadBeansFromCache();
     }
 
     private function cacheProxy()
@@ -60,28 +58,82 @@ class CacheSphringContext extends SphringGlobal
 
     private function loadContextFromCache()
     {
+
         $origFile = new File($this->getSphring()->getYamlarh()->getFilename());
-        if ($origFile->getTime() != $this->cacheFile->getTime()) {
+        $this->cacheFileContext = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
+            sprintf(SphringCacheEnum::CACHE_FILE_CONTEXT, $origFile->getHash('md5')));
+        if (!$this->cacheFileContext->isFile()) {
             return;
         }
-        $context = unserialize($this->cacheFile->getContent());
+        $origFile = new File($this->getSphring()->getYamlarh()->getFilename());
+        if ($origFile->getTime() != $this->cacheFileContext->getTime()) {
+            return;
+        }
+        $context = unserialize($this->cacheFileContext->getContent());
         $this->getSphring()->setContext($context);
+    }
+
+    private function loadBeansFromCache()
+    {
+
+        $origFile = new File($this->getSphring()->getYamlarh()->getFilename());
+        $this->cacheFileContext = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
+            sprintf(SphringCacheEnum::CACHE_FILE_BEAN, $origFile->getHash('md5')));
+        if (!$this->cacheFileContext->isFile()) {
+            return;
+        }
+        $origFile = new File($this->getSphring()->getYamlarh()->getFilename());
+        if ($origFile->getTime() != $this->cacheFileContext->getTime()) {
+            return;
+        }
+        $beans = unserialize($this->cacheFileContext->getContent());
+        $this->getSphring()->setBeansObject($beans);
+
+        $proxies = [];
+
+        //fast table writing
+        $key = array_keys($beans);
+        $size = sizeOf($key);
+        for ($i = 0; $i < $size; $i++) {
+            $bean = $beans[$key[$i]];
+            $proxies[$bean->getId()] = $bean->getObject();
+        }
+
+        $this->getSphring()->setProxyBeans($proxies);
     }
 
     /**
      * @return File
      */
-    public function getCacheFile()
+    public function getCacheFileContext()
     {
-        return $this->cacheFile;
+        return $this->cacheFileContext;
     }
 
     /**
-     * @param File $cacheFile
+     * @param File $cacheFileContext
      */
-    public function setCacheFile(File $cacheFile)
+    public function setCacheFileContext(File $cacheFileContext)
     {
-        $this->cacheFile = $cacheFile;
+        $this->cacheFileContext = $cacheFileContext;
+    }
+
+    /**
+     * @return File
+     */
+    public function getCacheFileBean()
+    {
+        return $this->cacheFileBean;
+    }
+
+    /**
+     * @param File $cacheFileBean
+     */
+    public function setCacheFileBean($cacheFileBean)
+    {
+        $this->cacheFileBean = $cacheFileBean;
     }
 
 

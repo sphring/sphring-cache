@@ -4,6 +4,12 @@ root:
     class:
       _type: text
       _required: true
+    cacheSphringProxies:
+      _type: text
+      _required: false
+    cacheSphringContext:
+      _type: text
+      _required: false
     cacheSphring:
       _type: text
       _required: false

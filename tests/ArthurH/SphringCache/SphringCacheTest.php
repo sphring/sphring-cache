@@ -29,6 +29,14 @@ class SphringCacheTest extends \PHPUnit_Framework_TestCase
      * @var File
      */
     private $contextCacheFile;
+    /**
+     * @var File
+     */
+    private $beanCacheFile;
+    /**
+     * @var Folder
+     */
+    private $proxiesFolder;
 
     public function testCachedContextFileLoaded()
     {
@@ -48,7 +56,13 @@ class SphringCacheTest extends \PHPUnit_Framework_TestCase
         $contextFile = new File(__DIR__ . '/Resources/mainSimpleTest.yml');
         $this->contextCacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
             SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR
-            . sprintf(SphringCacheEnum::CACHE_FILE, $contextFile->getHash('md5')));
+            . sprintf(SphringCacheEnum::CACHE_FILE_CONTEXT, $contextFile->getHash('md5')));
+        $this->beanCacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR
+            . sprintf(SphringCacheEnum::CACHE_FILE_BEAN, $contextFile->getHash('md5')));
+        $this->proxiesFolder = new Folder(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER_PROXIES);
         $this->sphring = new Sphring(__DIR__ . '/Resources/mainSimpleTest.yml');
         $this->sphring->setComposerLockFile(__DIR__ . '/Resources/composer.lock');
         $this->sphring->loadContext();
@@ -57,6 +71,7 @@ class SphringCacheTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         $this->contextCacheFile->remove();
+        $this->beanCacheFile->remove();
     }
 
     public function testCacheContextFile()
@@ -64,16 +79,32 @@ class SphringCacheTest extends \PHPUnit_Framework_TestCase
         $contextFile = new File(__DIR__ . '/Resources/mainSimpleTest.yml');
         $this->contextCacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
             SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR
-            . sprintf(SphringCacheEnum::CACHE_FILE, $contextFile->getHash('md5')));
+            . sprintf(SphringCacheEnum::CACHE_FILE_CONTEXT, $contextFile->getHash('md5')));
         $this->assertTrue($this->contextCacheFile->isFile());
     }
 
     public function testCacheProxies()
     {
-        $proxiesFolder = new Folder(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
-            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
-            SphringCacheEnum::CACHE_FOLDER_PROXIES);
-        $files = $proxiesFolder->getFiles('#.*.php$#i');
-        $this->assertCount(2, $files);
+        $files = $this->proxiesFolder->getFiles('#.*.php$#i');
+        $this->assertCount(3, $files);
+    }
+
+    public function testCacheBean()
+    {
+        $contextFile = new File(__DIR__ . '/Resources/mainSimpleTest.yml');
+        $this->beanCacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR
+            . sprintf(SphringCacheEnum::CACHE_FILE_BEAN, $contextFile->getHash('md5')));
+        $beans = unserialize($this->beanCacheFile->getContent());
+        $foobean = $beans['foobean']->getObject();
+        $this->assertEquals('testFoo', $foobean->getTest());
+        $this->assertEquals('testBar', $foobean->getBar()->getTest());
+        $this->sphring->clear();
+
+        $this->assertEmpty($this->sphring->getBeansObject());
+        $this->sphring->loadContext();
+        $foobean = $this->sphring->getBean('foobean');
+        $this->assertEquals('testFoo', $foobean->getTest());
+        $this->assertEquals('testBar', $foobean->getBar()->getTest());
     }
 }

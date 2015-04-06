@@ -19,6 +19,11 @@ namespace ArthurH\SphringCache\FakeBean;
  */
 class Foo
 {
+    private $test = "testFoo";
+    /**
+     * @var Bar
+     */
+    private $bar;
 
     public function __construct()
     {
@@ -32,4 +37,37 @@ class Foo
     {
 
     }
+
+    /**
+     * @return string
+     */
+    public function getTest()
+    {
+        return $this->test;
+    }
+
+    /**
+     * @param string $test
+     */
+    public function setTest($test)
+    {
+        $this->test = $test;
+    }
+
+    /**
+     * @return Bar
+     */
+    public function getBar()
+    {
+        return $this->bar;
+    }
+
+    /**
+     * @param Bar $bar
+     */
+    public function setBar(Bar $bar)
+    {
+        $this->bar = $bar;
+    }
+
 }

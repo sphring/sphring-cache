@@ -20,12 +20,24 @@ abstract class AbstractCacheManager
     /**
      * @var Sphring
      */
-    private $sphring;
+    protected $sphring;
 
     /**
      * @var bool
      */
-    private $cacheSphring = true;
+    protected $cacheSphring = true;
+    /**
+     * @var bool
+     */
+    protected $cacheSphringProxies = true;
+    /**
+     * @var bool
+     */
+    protected $cacheSphringContext = true;
+    /**
+     * @var bool
+     */
+    protected $cacheSphringBean = true;
 
     /**
      * @return Sphring
@@ -57,6 +69,54 @@ abstract class AbstractCacheManager
     public function setCacheSphring($cacheSphring)
     {
         $this->cacheSphring = (boolean)$cacheSphring;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCacheSphringProxies()
+    {
+        return $this->cacheSphringProxies;
+    }
+
+    /**
+     * @param boolean $cacheSphringProxies
+     */
+    public function setCacheSphringProxies($cacheSphringProxies)
+    {
+        $this->cacheSphringProxies = $cacheSphringProxies;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCacheSphringContext()
+    {
+        return $this->cacheSphringContext;
+    }
+
+    /**
+     * @param boolean $cacheSphringContext
+     */
+    public function setCacheSphringContext($cacheSphringContext)
+    {
+        $this->cacheSphringContext = $cacheSphringContext;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCacheSphringBean()
+    {
+        return $this->cacheSphringBean;
+    }
+
+    /**
+     * @param boolean $cacheSphringBean
+     */
+    public function setCacheSphringBean($cacheSphringBean)
+    {
+        $this->cacheSphringBean = $cacheSphringBean;
     }
 
 }
