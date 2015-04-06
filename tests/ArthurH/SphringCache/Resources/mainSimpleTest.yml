@@ -1,6 +1,7 @@
 cache:
   type: cache
   class:  ArthurH\SphringCache\CacheManager\NullCacheManager
+  cacheSphringBean: true
 foobean:
   class: ArthurH\SphringCache\FakeBean\Foo
   properties:

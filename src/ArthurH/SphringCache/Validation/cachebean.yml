@@ -10,6 +10,9 @@ root:
     cacheSphringContext:
       _type: text
       _required: false
+    cacheSphringBean:
+      _type: text
+      _required: false
     cacheSphring:
       _type: text
       _required: false

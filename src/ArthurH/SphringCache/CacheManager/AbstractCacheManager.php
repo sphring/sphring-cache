@@ -37,7 +37,7 @@ abstract class AbstractCacheManager
     /**
      * @var bool
      */
-    protected $cacheSphringBean = true;
+    protected $cacheSphringBean = false;
 
     /**
      * @return Sphring

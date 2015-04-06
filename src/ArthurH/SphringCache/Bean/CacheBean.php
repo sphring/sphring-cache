@@ -37,7 +37,7 @@ class CacheBean extends AbstractBean
     /**
      * @var bool
      */
-    private $cacheSphringBean = true;
+    private $cacheSphringBean = false;
 
     public function inject()
     {
