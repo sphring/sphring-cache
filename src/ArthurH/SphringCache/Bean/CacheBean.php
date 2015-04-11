@@ -37,6 +37,10 @@ class CacheBean extends AbstractBean
     /**
      * @var bool
      */
+    private $cacheSphringAnnotation = true;
+    /**
+     * @var bool
+     */
     private $cacheSphringBean = false;
 
     public function inject()
@@ -50,6 +54,7 @@ class CacheBean extends AbstractBean
         $this->object->setCacheSphringProxies($this->cacheSphringProxies);
         $this->object->setCacheSphringContext($this->cacheSphringContext);
         $this->object->setCacheSphringBean($this->cacheSphringBean);
+        $this->object->setCacheSphringAnnotation($this->cacheSphringAnnotation);
         SphringCacheRunnerPlugin::getInstance()->setCacheManager($this->object);
     }
 
@@ -120,6 +125,22 @@ class CacheBean extends AbstractBean
     public function setCacheSphringBean($cacheSphringBean)
     {
         $this->cacheSphringBean = $cacheSphringBean;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCacheSphringAnnotation()
+    {
+        return $this->cacheSphringAnnotation;
+    }
+
+    /**
+     * @param boolean $cacheSphringAnnotation
+     */
+    public function setCacheSphringAnnotation($cacheSphringAnnotation)
+    {
+        $this->cacheSphringAnnotation = $cacheSphringAnnotation;
     }
 
 }

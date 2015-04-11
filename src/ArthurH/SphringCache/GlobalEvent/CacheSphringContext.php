@@ -18,6 +18,9 @@ use Arhframe\Util\Folder;
 use Arthurh\Sphring\Model\SphringGlobal;
 use Arthurh\Sphring\ProxyGenerator\ProxyGenerator;
 use ArthurH\SphringCache\Enum\SphringCacheEnum;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\CachedReader;
+use Doctrine\Common\Cache\FilesystemCache;
 use ProxyManager\Configuration;
 use ProxyManager\Factory\AccessInterceptorValueHolderFactory;
 
@@ -41,6 +44,7 @@ class CacheSphringContext extends SphringGlobal
         $this->cacheProxy();
         $this->loadContextFromCache();
         $this->loadBeansFromCache();
+        $this->loadAnnotationFromCache();
     }
 
     private function cacheProxy()
@@ -72,6 +76,20 @@ class CacheSphringContext extends SphringGlobal
         }
         $context = unserialize($this->cacheFileContext->getContent());
         $this->getSphring()->setContext($context);
+    }
+
+    private function loadAnnotationFromCache()
+    {
+        $annotationsFolder = new Folder(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER_ANNOTATIONS);
+        $annotationsFolder->create();
+        $reader = new CachedReader(
+            new AnnotationReader(),
+            new FilesystemCache($annotationsFolder->absolute())
+        );
+        $sphringBoot = $this->sphring->getSphringEventDispatcher()->getSphringBoot();
+        $sphringBoot->getSphringAnnotationReader()->setReader($reader);
     }
 
     private function loadBeansFromCache()

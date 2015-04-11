@@ -37,6 +37,10 @@ abstract class AbstractCacheManager
     /**
      * @var bool
      */
+    private $cacheSphringAnnotation = true;
+    /**
+     * @var bool
+     */
     protected $cacheSphringBean = false;
 
     /**
@@ -117,6 +121,22 @@ abstract class AbstractCacheManager
     public function setCacheSphringBean($cacheSphringBean)
     {
         $this->cacheSphringBean = $cacheSphringBean;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCacheSphringAnnotation()
+    {
+        return $this->cacheSphringAnnotation;
+    }
+
+    /**
+     * @param boolean $cacheSphringAnnotation
+     */
+    public function setCacheSphringAnnotation($cacheSphringAnnotation)
+    {
+        $this->cacheSphringAnnotation = $cacheSphringAnnotation;
     }
 
 }

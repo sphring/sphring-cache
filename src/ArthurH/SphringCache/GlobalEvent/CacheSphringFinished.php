@@ -45,6 +45,7 @@ class CacheSphringFinished extends SphringGlobal
         $this->cacheSphringContext();
         $this->cacheSphringBean();
         $this->removeProxies();
+        $this->removeAnnotation();
     }
 
     private function cacheSphringContext()
@@ -103,8 +104,22 @@ class CacheSphringFinished extends SphringGlobal
         $proxiesFolder = new Folder(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
             SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
             SphringCacheEnum::CACHE_FOLDER_PROXIES);
+
         $proxiesFolder->removeFiles('#.*#i', true);
         $proxiesFolder->remove();
+    }
+
+    private function removeAnnotation()
+    {
+        if ($this->cacheManager->isCacheSphringAnnotation()) {
+            return;
+        }
+        $annotationsFolder = new Folder(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
+            SphringCacheEnum::CACHE_FOLDER_ANNOTATIONS);
+        $annotationsFolder->removeFiles('#.*#i', true);
+        $annotationsFolder->removeFolders('#.*#i', true);
+        $annotationsFolder->remove();
     }
 
     /**

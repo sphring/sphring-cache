@@ -21,4 +21,5 @@ class SphringCacheEnum extends Enum
     const CACHE_FILE_BEAN = '.cache-sphring-bean-%s';
     const CACHE_FOLDER = 'sphring';
     const CACHE_FOLDER_PROXIES = 'proxies';
+    const CACHE_FOLDER_ANNOTATIONS = 'annotations';
 }
