@@ -8,7 +8,7 @@ use ArthurH\SphringCache\CacheManager\AbstractCacheManager;
 /**
  * Class SphringRunnerPlugin
  * @LoadContext
- * @RootProject(../../../)
+ * @RootProject(file="../../../")
  */
 class SphringCacheRunnerPlugin extends \Arthurh\Sphring\Runner\SphringRunner
 {
