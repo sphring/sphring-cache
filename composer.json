@@ -3,7 +3,7 @@
   "description": "This sphring cache plugin",
   "type": "project",
   "require": {
-    "sphring/sphring": "~0.11"
+    "sphring/sphring": "~0.12"
   },
   "require-dev": {
     "phpunit/phpunit": "*",
