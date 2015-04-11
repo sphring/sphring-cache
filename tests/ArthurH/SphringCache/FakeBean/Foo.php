@@ -11,11 +11,11 @@
  */
 
 namespace ArthurH\SphringCache\FakeBean;
+use ArthurH\SphringCache\CacheAnnotation\Cacheable;
 
 /**
  * Class Foo
  * @package Arthurh\Sphring\FakeBean
- * @TestClassInstantiate
  */
 class Foo
 {
@@ -31,7 +31,7 @@ class Foo
     }
 
     /**
-     * @Cacheable
+     * @Cacheable()
      */
     public function testCacheable()
     {

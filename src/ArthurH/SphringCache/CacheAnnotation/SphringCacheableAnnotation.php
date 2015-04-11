@@ -13,6 +13,7 @@
 namespace ArthurH\SphringCache\CacheAnnotation;
 
 
+use Arthurh\Sphring\Utils\ClassName;
 use ArthurH\SphringCache\Exception\SphringCacheException;
 
 class SphringCacheableAnnotation extends AbstractSphringCacheAnnotation
@@ -22,7 +23,7 @@ class SphringCacheableAnnotation extends AbstractSphringCacheAnnotation
      */
     public static function getAnnotationName()
     {
-        return "Cacheable";
+        return ClassName::getShortName(Cacheable::class);
     }
 
     /**
