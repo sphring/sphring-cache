@@ -18,6 +18,11 @@ use ArthurH\SphringCache\AbstractSphringCache;
 
 class CacheableTest extends AbstractSphringCache
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->contextFileTest = __DIR__ . '/../Resources/mainCacheTest.yml';
+    }
 
     public function testSimpleCacheable()
     {
@@ -35,7 +40,10 @@ class CacheableTest extends AbstractSphringCache
 
     public function tearDown()
     {
-        parent::tearDown();
+        $this->contextCacheFile->remove();
+        $this->annotationFolder->removeFiles('#.*#i', true);
+        $this->annotationFolder->removeFolders('#.*#i', true);
+        $this->annotationFolder->remove();
         $cacheFolder = new Folder(__DIR__ . '/../cache');
         $cacheFolder->removeFiles('#.*#i', true);
         $cacheFolder->removeFolders('#.*#i', true);

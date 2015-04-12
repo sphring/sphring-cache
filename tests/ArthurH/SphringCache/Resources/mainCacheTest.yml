@@ -1,0 +1,18 @@
+cache:
+  type: cache
+  class:  ArthurH\SphringCache\CacheManager\DoctrineCacheManager
+  properties:
+    doctrineCache:
+      ref: filesystemCache
+foobean:
+  class: ArthurH\SphringCache\FakeBean\Foo
+  properties:
+    bar:
+      ref: barbean
+barbean:
+  class: ArthurH\SphringCache\FakeBean\Bar
+filesystemCache:
+  class: Doctrine\Common\Cache\FilesystemCache
+  constructor:
+    1:
+      value: %CONTEXTROOT%/../cache

@@ -45,13 +45,13 @@ class SphringCacheTest extends AbstractSphringCache
     public function testCacheProxies()
     {
         $files = $this->proxiesFolder->getFiles('#.*.php$#i');
-        $this->assertCount(4, $files);
+        $this->assertCount(5, $files);
     }
 
     public function testCacheAnnotations()
     {
         $files = $this->annotationFolder->getFiles('#.*$#i', true);
-        $this->assertCount(59, $files);
+        $this->assertCount(29, $files);
     }
 
     public function testCacheBean()

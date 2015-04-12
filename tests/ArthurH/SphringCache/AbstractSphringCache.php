@@ -18,6 +18,13 @@ use ArthurH\SphringCache\Enum\SphringCacheEnum;
  */
 class AbstractSphringCache extends \PHPUnit_Framework_TestCase
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->contextFileTest = __DIR__ . '/Resources/mainSimpleTest.yml';
+    }
+
+    protected $contextFileTest;
     /**
      * @var Sphring
      */
@@ -42,7 +49,7 @@ class AbstractSphringCache extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $contextFile = new File(__DIR__ . '/Resources/mainSimpleTest.yml');
+        $contextFile = new File($this->contextFileTest);
         $this->contextCacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
             SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR
             . sprintf(SphringCacheEnum::CACHE_FILE_CONTEXT, $contextFile->getHash('md5')));
@@ -55,7 +62,7 @@ class AbstractSphringCache extends \PHPUnit_Framework_TestCase
         $this->annotationFolder = new Folder(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
             SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
             SphringCacheEnum::CACHE_FOLDER_ANNOTATIONS);
-        $this->sphring = new Sphring(__DIR__ . '/Resources/mainSimpleTest.yml');
+        $this->sphring = new Sphring($this->contextFileTest);
         $this->sphring->setComposerLockFile(__DIR__ . '/Resources/composer.lock');
         $this->sphring->loadContext();
     }
