@@ -14,10 +14,38 @@ namespace ArthurH\SphringCache\CacheAnnotation;
 
 /**
  * @Annotation
+ * @Target({"METHOD"})
  * Class Cacheable
  * @package ArthurH\SphringCache\CacheAnnotation
  */
 class Cacheable
 {
-
+    /**
+     * @var string
+     */
+    public $value;
+    /**
+     * @var string
+     */
+    public $cacheManager;
+    /**
+     * @var string
+     */
+    public $condition;
+    /**
+     * @var string
+     */
+    public $key;
+    /**
+     * @var string
+     */
+    public $keyGenerator;
+    /**
+     * @var int
+     */
+    public $lifetime = 0;
+    /**
+     * @var string
+     */
+    public $unless;
 }

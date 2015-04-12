@@ -7,14 +7,22 @@
  * or at 'http://opensource.org/licenses/MIT'.
  *
  * Author: Arthur Halet
- * Date: 26/03/2015
+ * Date: 12/04/2015
  */
 
 namespace ArthurH\SphringCache\CacheManager;
 
 
-class NullCacheManager extends AbstractCacheManager
+use Arthurh\Sphring\Annotations\AnnotationsSphring\Required;
+use Doctrine\Common\Cache\Cache;
+
+class DoctrineCacheManager extends AbstractCacheManager
 {
+
+    /**
+     * @var Cache
+     */
+    private $doctrineCache;
 
     /**
      * Fetches an entry from the cache.
@@ -25,7 +33,7 @@ class NullCacheManager extends AbstractCacheManager
      */
     public function fetch($id)
     {
-        return false;
+        return $this->doctrineCache->fetch($id);
     }
 
     /**
@@ -37,7 +45,7 @@ class NullCacheManager extends AbstractCacheManager
      */
     public function contains($id)
     {
-        return false;
+        return $this->doctrineCache->contains($id);
     }
 
     /**
@@ -52,7 +60,7 @@ class NullCacheManager extends AbstractCacheManager
      */
     public function save($id, $data, $lifeTime = 0)
     {
-        return true;
+        return $this->doctrineCache->save($id, $data, $lifeTime);
     }
 
     /**
@@ -64,7 +72,7 @@ class NullCacheManager extends AbstractCacheManager
      */
     public function delete($id)
     {
-        return true;
+        return $this->doctrineCache->delete($id);
     }
 
     /**
@@ -93,6 +101,24 @@ class NullCacheManager extends AbstractCacheManager
      */
     public function getStats()
     {
-        return null;
+        return $this->doctrineCache->getStats();
     }
+
+    /**
+     * @return Cache
+     */
+    public function getDoctrineCache()
+    {
+        return $this->doctrineCache;
+    }
+
+    /**
+     * @param Cache $doctrineCache
+     * @Required()
+     */
+    public function setDoctrineCache($doctrineCache)
+    {
+        $this->doctrineCache = $doctrineCache;
+    }
+
 }

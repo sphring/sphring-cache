@@ -11,6 +11,7 @@
  */
 
 namespace ArthurH\SphringCache\FakeBean;
+
 use ArthurH\SphringCache\CacheAnnotation\Cacheable;
 
 /**
@@ -31,11 +32,12 @@ class Foo
     }
 
     /**
-     * @Cacheable()
+     * @Cacheable(value="testCache")
      */
-    public function testCacheable()
+    public function testCacheable($test)
     {
-
+        sleep(2);
+        return $test;
     }
 
     /**

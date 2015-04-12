@@ -50,6 +50,12 @@
                 "eventName": "Cacheable",
                 "class": "ArthurH\\SphringCache\\CacheAnnotation\\SphringCacheableAnnotation"
               }
+            ],
+            "annotationMethodCallAfter": [
+              {
+                "eventName": "Cacheable",
+                "class": "ArthurH\\SphringCache\\CacheAnnotation\\SphringCacheableAnnotation"
+              }
             ]
           },
           "isPlugin": true

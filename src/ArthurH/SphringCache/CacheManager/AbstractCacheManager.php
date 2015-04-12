@@ -14,8 +14,9 @@ namespace ArthurH\SphringCache\CacheManager;
 
 
 use Arthurh\Sphring\Sphring;
+use Doctrine\Common\Cache\Cache;
 
-abstract class AbstractCacheManager
+abstract class AbstractCacheManager implements Cache
 {
     /**
      * @var Sphring
@@ -138,5 +139,4 @@ abstract class AbstractCacheManager
     {
         $this->cacheSphringAnnotation = $cacheSphringAnnotation;
     }
-
 }

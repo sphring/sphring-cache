@@ -14,33 +14,11 @@ namespace ArthurH\SphringCache;
 
 
 use Arhframe\Util\File;
-use Arhframe\Util\Folder;
-use Arthurh\Sphring\Sphring;
 use ArthurH\SphringCache\Enum\SphringCacheEnum;
 
-class SphringCacheTest extends \PHPUnit_Framework_TestCase
+class SphringCacheTest extends AbstractSphringCache
 {
-    /**
-     * @var Sphring
-     */
-    private $sphring;
 
-    /**
-     * @var File
-     */
-    private $contextCacheFile;
-    /**
-     * @var File
-     */
-    private $beanCacheFile;
-    /**
-     * @var Folder
-     */
-    private $proxiesFolder;
-    /**
-     * @var Folder
-     */
-    private $annotationFolder;
 
     public function testCachedContextFileLoaded()
     {
@@ -55,35 +33,6 @@ class SphringCacheTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($beanCache);
     }
 
-    public function setUp()
-    {
-        $contextFile = new File(__DIR__ . '/Resources/mainSimpleTest.yml');
-        $this->contextCacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
-            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR
-            . sprintf(SphringCacheEnum::CACHE_FILE_CONTEXT, $contextFile->getHash('md5')));
-        $this->beanCacheFile = new File(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
-            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR
-            . sprintf(SphringCacheEnum::CACHE_FILE_BEAN, $contextFile->getHash('md5')));
-        $this->proxiesFolder = new Folder(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
-            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
-            SphringCacheEnum::CACHE_FOLDER_PROXIES);
-        $this->annotationFolder = new Folder(sys_get_temp_dir() . DIRECTORY_SEPARATOR .
-            SphringCacheEnum::CACHE_FOLDER . DIRECTORY_SEPARATOR .
-            SphringCacheEnum::CACHE_FOLDER_ANNOTATIONS);
-        $this->sphring = new Sphring(__DIR__ . '/Resources/mainSimpleTest.yml');
-        $this->sphring->setComposerLockFile(__DIR__ . '/Resources/composer.lock');
-        $this->sphring->loadContext();
-    }
-
-    public function tearDown()
-    {
-        $this->contextCacheFile->remove();
-        $this->beanCacheFile->remove();
-        $this->annotationFolder->removeFiles('#.*#i', true);
-        $this->annotationFolder->removeFolders('#.*#i', true);
-        $this->annotationFolder->remove();
-    }
-
     public function testCacheContextFile()
     {
         $contextFile = new File(__DIR__ . '/Resources/mainSimpleTest.yml');
@@ -96,13 +45,13 @@ class SphringCacheTest extends \PHPUnit_Framework_TestCase
     public function testCacheProxies()
     {
         $files = $this->proxiesFolder->getFiles('#.*.php$#i');
-        $this->assertCount(3, $files);
+        $this->assertCount(5, $files);
     }
 
     public function testCacheAnnotations()
     {
         $files = $this->annotationFolder->getFiles('#.*$#i', true);
-        $this->assertCount(24, $files);
+        $this->assertCount(59, $files);
     }
 
     public function testCacheBean()
